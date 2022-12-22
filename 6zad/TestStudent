@@ -1,0 +1,104 @@
+package damn6;
+
+import java.util.Comparator;
+
+public class TestStudent
+{
+    public TestStudent() {}
+
+    public static void selectionSort(Comparable[] list)
+    {
+        for(int index = 0; index < list.length - 1; ++index)
+        {
+            int min = index;
+
+            for(int scan = index + 1; scan < list.length; ++scan)
+            {
+                if (list[scan].compareTo(list[min]) < 0)
+                {
+                    min = scan;
+                }
+            }
+
+            Comparable temp = list[min];
+            list[min] = list[index];
+            list[index] = temp;
+        }
+
+    }
+
+    public static void swap(Student[] arr, int l, int r)
+    {
+        Student t = arr[l];
+        arr[l] = arr[r];
+        arr[r] = t;
+    }
+
+    public static void quickSort(Student[] list, Comparator c, int left, int right)
+    {
+        int ll = left;
+        int rr = right;
+        if (right > left)
+        {
+            Student pivot = list[(left + right) / 2];
+
+            while(ll <= rr)
+            {
+                while(ll < right && c.compare(list[ll], pivot) > 0)
+                {
+                    ++ll;
+                }
+
+                while(rr > left && c.compare(list[rr], pivot) < 0)
+                {
+                    --rr;
+                }
+
+                if (ll <= rr)
+                {
+                    swap(list, ll, rr);
+                    ++ll;
+                    --rr;
+                }
+            }
+
+            if (left < rr)
+            {
+                quickSort(list, c, left, rr);
+            }
+
+            if (ll < right)
+            {
+                quickSort(list, c, ll, right);
+            }
+        }
+
+    }
+
+    public static void main(String[] args)
+    {
+        Student[] listStudent = new Student[]{new Student(7, "Sergei", "02/09/1945", 3.7), new Student(1, "Anna", "01/08/1995", 2.5), new Student(4, "Petrov", "23/05/2000", 3.9), new Student(10, "Jena", "12/04/1997", 1.2)};
+        System.out.println("List of student before sort: ");
+        Student[] var2 = listStudent;
+        int var3 = listStudent.length;
+
+        int var4;
+        for(var4 = 0; var4 < var3; ++var4)
+        {
+            Student t = var2[var4];
+            System.out.println(t);
+        }
+
+        SortingStudentByGPA sortByGPA = new SortingStudentByGPA();
+        quickSort(listStudent, sortByGPA, 0, 3);
+        System.out.println("List of student after sort: ");
+        Student[] var8 = listStudent;
+        var4 = listStudent.length;
+
+        for(int var9 = 0; var9 < var4; ++var9)
+        {
+            Student t = var8[var9];
+            System.out.println(t);
+        }
+    }
+}
