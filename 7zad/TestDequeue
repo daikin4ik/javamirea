@@ -1,0 +1,71 @@
+package damn7;
+
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.Scanner;
+
+public class TestDequeue {
+    public TestDequeue() {}
+    public static boolean gameplay(int first, int second)
+    {
+        if (first == 0 && second == 9)
+        {
+            return true;
+        }
+        else
+        {
+            if (first == 9 && second == 0)
+            {
+                return false;
+            }
+            else
+            {
+                return first > second;
+            }
+        }
+    }
+
+    public static void main (String[] args)
+    {
+        Scanner sc = new Scanner(System.in);
+        Deque<Integer> first = new ArrayDeque();
+        Deque<Integer> second = new ArrayDeque();
+
+        int count;
+
+        for(count = 0; count < 5; ++count) {
+            first.addLast(sc.nextInt());
+        }
+
+        for (count = 0; count < 5; ++count)
+        {
+            second.addLast(sc.nextInt());
+        }
+        count = 0;
+        while (!first.isEmpty() && !second.isEmpty())
+        {
+            int f = (Integer)first.getFirst();
+            int s = (Integer)second.getFirst();
+            first.removeFirst();
+            second.removeFirst();
+            if (gameplay(f, s))
+            {
+                first.addLast(f);
+                first.addLast(s);
+            }
+            else
+            {
+                second.addLast(f);
+                second.addLast(s);
+            }
+
+            if (count++ == 106)
+            {
+                System.out.println("botva");
+                return;
+            }
+        }
+        System.out.println((first.isEmpty() ? "second " : "first ") + count);
+    }
+
+}
